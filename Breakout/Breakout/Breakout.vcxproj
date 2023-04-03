@@ -136,6 +136,8 @@
     <ClInclude Include="..\Dependencies\glad\include\glad\glad.h" />
     <ClInclude Include="..\Dependencies\glad\include\KHR\khrplatform.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="gamelevel.h" />
+    <ClInclude Include="gameobject.h" />
     <ClInclude Include="resourcemanager.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="spriterenderer.h" />
@@ -144,6 +146,8 @@
   <ItemGroup>
     <ClCompile Include="..\Dependencies\glad\src\glad.c" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="gamelevel.cpp" />
+    <ClCompile Include="gameobject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="resourcemanager.cpp" />
     <ClCompile Include="shader.cpp" />
