@@ -135,6 +135,7 @@
   <ItemGroup>
     <ClInclude Include="..\Dependencies\glad\include\glad\glad.h" />
     <ClInclude Include="..\Dependencies\glad\include\KHR\khrplatform.h" />
+    <ClInclude Include="ballobject.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gamelevel.h" />
     <ClInclude Include="gameobject.h" />
@@ -145,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Dependencies\glad\src\glad.c" />
+    <ClCompile Include="ballobject.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gamelevel.cpp" />
     <ClCompile Include="gameobject.cpp" />

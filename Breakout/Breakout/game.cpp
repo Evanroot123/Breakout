@@ -1,9 +1,14 @@
 #include "Game.h"
 #include "resourcemanager.h"
 #include "spriterenderer.h"
+#include "ballobject.h"
 
 SpriteRenderer* renderer;
 GameObject* player;
+BallObject* ball;
+
+const glm::vec2 INITIAL_BALL_VELOCITY(100.0f, -350.0f);
+const float BALL_RADIUS = 12.5f;
 
 Game::Game(unsigned int wid, unsigned int hei) :
 	state(GAME_ACTIVE), keys(), width(wid), height(hei)
@@ -15,6 +20,7 @@ Game::~Game()
 {
 	delete renderer;
 	delete player;
+	delete ball;
 }
 
 void Game::init()
@@ -43,11 +49,13 @@ void Game::init()
 
 	glm::vec2 playerPos = glm::vec2(width / 2.0f - PLAYER_SIZE.x / 2.0f, height - PLAYER_SIZE.y);
 	player = new GameObject(playerPos, PLAYER_SIZE, ResourceManager::getTexture("paddle"));
+	glm::vec2 ballPos = playerPos + glm::vec2(PLAYER_SIZE.x / 2.0f - BALL_RADIUS, -BALL_RADIUS * 2.0f);
+	ball = new BallObject(ballPos, BALL_RADIUS, INITIAL_BALL_VELOCITY, ResourceManager::getTexture("face"));
 }
 
 void Game::update(float dt)
 {
-
+	ball->Move(dt, width);
 }
 
 void Game::processInput(float dt)
@@ -59,12 +67,24 @@ void Game::processInput(float dt)
 		if (keys[GLFW_KEY_A])
 		{
 			if (player->position.x >= 0.0f)
+			{
 				player->position.x -= velocity;
+				if (ball->stuck)
+					ball->position.x -= velocity;
+			}
 		}
 		if (keys[GLFW_KEY_D])
 		{
 			if (player->position.x <= width - player->size.x)
+			{
 				player->position.x += velocity;
+				if (ball->stuck)
+					ball->position.x += velocity;
+			}
+		}
+		if (keys[GLFW_KEY_SPACE])
+		{
+			ball->stuck = false;
 		}
 	}
 }
@@ -76,5 +96,6 @@ void Game::render()
 		renderer->drawSprite(ResourceManager::getTexture("background"), glm::vec2(0.0f, 0.0f), glm::vec2(width, height), 0.0f);
 		levels[level].draw(*renderer);
 		player->draw(*renderer);
+		ball->draw(*renderer);
 	}
 }
